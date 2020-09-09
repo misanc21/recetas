@@ -1,12 +1,38 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {CategoriasContext} from '../context/CategoriasContext'
+import { RecetasContext } from '../context/RecetasContext'
 
 const Formulario = () => {
 
-    const {} = useContext(CategoriasContext)
+    const { categorias } = useContext(CategoriasContext)
+    const { setBusque, setConsultar } = useContext(RecetasContext)
+
+    const [busqueda, setBusqueda] = useState({
+        nombre:'',
+        categoria: ''
+    })
     
+    const getDatosReceta = e => {
+        
+        setBusqueda({
+            ...busqueda,
+            [e.target.name] : e.target.value
+        })
+    }
+    
+    const {nombre, categoria} = busqueda 
+
+    const verificaReceta = e =>{
+        e.preventDefault()
+        setBusque({
+            nombre: nombre,
+            categoria: categoria
+        })
+        setConsultar(true)
+    }
+
     return ( 
-        <form className="col 12">
+        <form className="col 12" onSubmit={verificaReceta}>
             <fieldset>
                 <legend className="text-center">Busca bebidas por categoria o ingrediente</legend>
             </fieldset>
@@ -17,14 +43,19 @@ const Formulario = () => {
                         className="form-control"
                         type="text"
                         placeholder="Buscar por ingrediente"
+                        onChange={getDatosReceta}
                     />
                 </div>
                 <div className="col-md-4">
                     <select
                         className="form-control"
                         name="categoria"
+                        onChange={getDatosReceta}
                     >
-                        <option>-- selecciona la categoria --</option>
+                        <option value="">-- selecciona la categoria --</option>
+                        {categorias.map(cat => {
+                            return <option key={cat.strCategory }value={cat.strCategory}>{cat.strCategory}</option>
+                        })}
                     </select>
                 </div>
                 <div className="col-md-4">
