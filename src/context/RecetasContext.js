@@ -34,7 +34,7 @@ const RecetasProvider = (props) => {
             }
             obtenerRecetas();
         }
-    // eslint-disable-next-line no-use-before-define
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [busque])
 
     return(

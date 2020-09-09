@@ -49,7 +49,7 @@ const Formulario = () => {
                 nombre:''
             })
         }
-    // eslint-disable-next-line no-use-before-define
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tipoBusqueda])
 
     return (
