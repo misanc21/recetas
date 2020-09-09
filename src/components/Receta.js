@@ -17,13 +17,19 @@ function getModalStyle() {
   
   const useStyles = makeStyles((theme) => ({
     paper: {
-      position: 'absolute',
-      width: 400,
-      backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
+        position: 'absolute',
+        [theme.breakpoints.down('sm')]: {
+          width: '100%',  
+        },
+        [theme.breakpoints.up('sm')]: {
+          width: 450,  
+        },
+        maxHeight: 500,
+        overflowY: 'auto',
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+      },
   }));
 
 const Receta = ( {receta} ) => {
@@ -43,6 +49,18 @@ const Receta = ( {receta} ) => {
 
 
     const {setIdReceta, info, setInfo} = useContext(ModalContext)
+
+    const mostraIngredientes = info => {
+        let ingredientes = []
+        for (let i = 1; i < 16; i++) {
+            if(info[`strIngredient${i}`]){
+                ingredientes.push(
+                    <li>{info[`strIngredient${i}`]} - {info[`strMeasure${i}`]}</li>
+                )
+            }
+        }
+        return ingredientes;
+    }
     
     return ( 
         <div className="col-md-4 mb-3">
@@ -85,6 +103,10 @@ const Receta = ( {receta} ) => {
                                 {info.strInstructions}
                             </p>
                             <img className="img-fluid mt-4" src={info.strDrinkThumb} alt="imagen"/>
+                            <h3 className="mt-3">Ingredientes y cantidades</h3>
+                            <ul>
+                                {mostraIngredientes(info)}
+                            </ul>
                         </div>
                     </Modal>
                 </div>
