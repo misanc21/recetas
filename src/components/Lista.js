@@ -5,16 +5,23 @@ import Receta from './Receta'
 
 const Lista = () => {
 
-    const { recetas } = useContext(RecetasContext)
+    const { recetas, errorConsReceta } = useContext(RecetasContext)
 
-    return ( 
+
+    return (
         <div className="row mt-5">
-            {recetas.map(r => {
+            {errorConsReceta || recetas === undefined?
+            <div className="col-12">
+                <p className="bg-dark text-white p-4">No se encontraron bebidas, prueba con otro nombre o categoría.</p>
+            </div>
+            : 
+            recetas.map(r => {
                 return <Receta
-                    key={r.drink}
+                    key={r.idDrink}
                     receta = {r}
                 />
-            })}
+            })
+            }
         </div>
      );
 }

@@ -7,18 +7,30 @@ const RecetasProvider = (props) => {
 
     const [busque, setBusque] = useState({
         nombre:'',
-        categoria:''
+        categoria:'',
+        tipoBusqueda:''
     })
     const [recetas, setRecetas] = useState([])
 
     const [consultar, setConsultar] = useState(false)
 
-    const {nombre, categoria} = busque
+    const [errorConsReceta, setErrorConsReceta] = useState(false)
+
+    const {nombre, categoria, tipoBusqueda} = busque
     useEffect(() => { 
         if(consultar){
             const obtenerRecetas = async () => {
-                const consulta = await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${nombre}&c=${categoria}`)
-                setRecetas(consulta.data.drinks)
+                setErrorConsReceta(false)
+                let url= ''
+                if(tipoBusqueda === 'nombre'){
+                    url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${nombre}`
+                }else{
+                    url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categoria}`
+                }
+                
+                await axios.get(url)
+                .then( consulta => setRecetas(consulta.data.drinks))
+                .catch(e => setErrorConsReceta(true))
             }
             obtenerRecetas();
         }
@@ -30,6 +42,7 @@ const RecetasProvider = (props) => {
             value={{
                 setBusque,
                 setConsultar,
+                errorConsReceta,
                 recetas
             }}
         >
