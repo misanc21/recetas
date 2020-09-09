@@ -24,7 +24,7 @@ function getModalStyle() {
         [theme.breakpoints.up('sm')]: {
           width: 450,  
         },
-        maxHeight: 500,
+        maxHeight: 600,
         overflowY: 'auto',
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
@@ -55,7 +55,7 @@ const Receta = ( {receta} ) => {
         for (let i = 1; i < 16; i++) {
             if(info[`strIngredient${i}`]){
                 ingredientes.push(
-                    <li>{info[`strIngredient${i}`]} - {info[`strMeasure${i}`]}</li>
+                    <li key={i}>{info[`strIngredient${i}`]} - {info[`strMeasure${i}`]}</li>
                 )
             }
         }
