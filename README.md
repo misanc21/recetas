@@ -18,4 +18,6 @@ _dependencias:_
 
 ## Autores ✒️
 
+_proyecto original en el curso **React - La Guía Completa... autor: Juan Pablo de la Torre**_
+
 * **Misael Nivio**  - [misanc21](https://github.com/misanc21)
